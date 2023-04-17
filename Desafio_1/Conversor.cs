@@ -2,37 +2,28 @@
 {
     public static class Conversor
     {
-        public static string ValidarNumero(string numero)
+        static string extenso = "";
+        static string[] unidade = { "zero", "um", "dois", "três", "quarto", "cinco", "seis", "sete", "oito", "nove" };
+        static string[] dezenas = { "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove" };
+        static string[] dezenasAcimaDe19 = { "vinte,", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa" };
+        static string[] centenas = { "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos" };
+
+        public static string ConverterInteiroParaExtenso(string numeroParaConverter)
+        
         {
-            bool numeroValido = int.TryParse(numero, out int valorNumericoInteiro);
+            var valor = SepararNumeroParaValidar(numeroParaConverter);
 
-            if (numeroValido && valorNumericoInteiro == 0)
-                return "O número digitado por extenso é Zero";
+            if(valor.Length == 1 && valor[0] == '0')
+                return $"O valor por extenso informado é: {unidade[0]}";
 
-            if (numeroValido && valorNumericoInteiro != 0)
-                return SepararNumeroParaValidar(numero).ToString();
-
-            return "O valor informado não é um inteiro ou não representa um valor aceitável";
-        }
-
-        private static char[] ConverterInteiroParaExtenso(string numeroAjustado)
-        {
-            var numeroSeparado = numeroAjustado.ToCharArray();
-        
-        
-        
-            return numeroSeparado;
+            return "";
         }
 
         private static char[] SepararNumeroParaValidar(string numeroAjustado)
         {
             var numeroSeparado = numeroAjustado.ToCharArray();
 
-
-
             return numeroSeparado;
         }
-
-        
     }
 }
