@@ -5,13 +5,15 @@ ValidarValor(valorInserido);
 int[] valoresParaSomar = new int[int.Parse(valorInserido)];
 for (int i = 0; i < int.Parse(valorInserido); i++)
 {
+    Console.WriteLine("");
     Console.WriteLine("Digite um valor para ser somado: ");
     string valorParaAdicionarArray = Console.ReadLine();
     if (ValidarValor(valorParaAdicionarArray))
-        valoresParaSomar[i] = int.Parse(valorParaAdicionarArray);   
+        valoresParaSomar[i] = int.Parse(valorParaAdicionarArray); 
 }
 
 string valorTotalDoArray = SomarValoresDoArray(valoresParaSomar);
+Console.WriteLine("================================================");
 Console.WriteLine($"O valor total do array é de {valorTotalDoArray}");
 
 string SomarValoresDoArray(int[] arrayParaSomar)
