@@ -2,28 +2,32 @@
 {
     public static class Conversor
     {
-        static string extenso = "";
-        static string[] unidade = { "zero", "um", "dois", "três", "quarto", "cinco", "seis", "sete", "oito", "nove" };
-        static string[] dezenas = { "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove" };
-        static string[] dezenasAcimaDe19 = { "vinte,", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa" };
-        static string[] centenas = { "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos" };
+        private static string extenso = "";
+        private static string[] unidade = { "zero", "um", "dois", "três", "quarto", "cinco", "seis", "sete", "oito", "nove" };
+        private static string[] dezenas = { "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove" };
+        private static string[] dezenasAcimaDe19 = { "vinte,", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa" };
+        private static string[] centenas = { "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos" };
 
-        public static string ConverterInteiroParaExtenso(string numeroParaConverter)
-        
+        public static string ConverterInteiroParaExtenso(string numeroParaConverter) 
         {
-            var valor = SepararNumeroParaValidar(numeroParaConverter);
-
-            if(valor.Length == 1 && valor[0] == '0')
-                return $"O valor por extenso informado é: {unidade[0]}";
-
+            var valor = SepararNumeros(numeroParaConverter);
+          
             return "";
         }
 
-        private static char[] SepararNumeroParaValidar(string numeroAjustado)
+        private static Dictionary<int,string> SepararNumeros(string valor)
         {
-            var numeroSeparado = numeroAjustado.ToCharArray();
+            Dictionary<int,string> valoresNumericosSeparados = new Dictionary<int,string>();
 
-            return numeroSeparado;
+            int totalDeCasas = valor.Length-1;
+            string numeroSeparado = "";
+
+            if(valor.Length > 1)
+            {
+                string unidadeSeparada = valor.Substring(totalDeCasas, 1) ;
+            }         
+
+            return valoresNumericosSeparados;
         }
     }
 }
