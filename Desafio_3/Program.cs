@@ -7,7 +7,7 @@ var teste = decimal.TryParse("+", out var resultadoEmDecimal);
 
 ResolverExpressaoMatematica(expressao);
 
-decimal ResolverExpressaoMatematica(string expressao)
+string ResolverExpressaoMatematica(string expressao)
 {
     var valoresSeparados = SepararValorEmCaracteres(expressao);
 
@@ -15,13 +15,30 @@ decimal ResolverExpressaoMatematica(string expressao)
 
     for (int i = 1; i < valoresSeparados.Count; i += 2)
     {
-        var decimalValido = decimal.TryParse(valoresSeparados[i], out var resultadoEmDecimal);
-        if (decimalValido)
+        string operador = "";
+        var valorDecimalConvertido = decimal.TryParse(valoresSeparados[i], out var resultadoEmDecimal);
+
+        if (valorDecimalConvertido == true && valoresSeparados[i].Contains('-'))
+            operador = "-";
+
+        if (valorDecimalConvertido == true && valoresSeparados[i].Contains('+'))
+            operador = "+";
 
 
+        if (operador == "+")
+            valorAtual += resultadoEmDecimal;
+
+        else if (operador == "-")
+            valorAtual -= resultadoEmDecimal;
+
+        else if (operador == "*")
+            valorAtual *= resultadoEmDecimal;
+
+        else if (operador == "/")
+            valorAtual /= resultadoEmDecimal;
     }
 
-    return valorAtual;
+    return $"O resultado da expressão é: {valorAtual}";
 }
 
 List<string> SepararValorEmCaracteres(string expressao)
