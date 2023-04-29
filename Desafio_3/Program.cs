@@ -4,6 +4,8 @@ Console.WriteLine("Digite uma expressão matematica simples (contendo adição, 
 string expressao = Console.ReadLine();
 
 var resultadoExpressao = ResolverExpressaoMatematica(expressao);
+
+Console.WriteLine("");
 Console.WriteLine($"O resultado da expressão é: {resultadoExpressao}");
 
 decimal ResolverExpressaoMatematica(string expressao)
@@ -22,13 +24,22 @@ decimal ResolverExpressaoMatematica(string expressao)
             valoresSeparados.RemoveAt(i - 1);
         }
 
-        if (!valoresSeparados.Contains("*"))
+        if (!valoresSeparados.Contains("*") && !valoresSeparados.Contains("/"))
         {
             for (i=0; i < valoresSeparados.Count; i++)
             {
                 if (valoresSeparados[i] == "+")
                 {
                     valorAtual = decimal.Parse(valoresSeparados[i - 1]) + decimal.Parse(valoresSeparados[i + 1]);
+                    valoresSeparados.RemoveAt(i);
+                    valoresSeparados.Insert(i, valorAtual.ToString());
+                    valoresSeparados.RemoveAt(i + 1);
+                    valoresSeparados.RemoveAt(i - 1);
+                }
+
+                if (valoresSeparados[i] == "-")
+                {
+                    valorAtual = decimal.Parse(valoresSeparados[i - 1]) - decimal.Parse(valoresSeparados[i + 1]);
                     valoresSeparados.RemoveAt(i);
                     valoresSeparados.Insert(i, valorAtual.ToString());
                     valoresSeparados.RemoveAt(i + 1);
