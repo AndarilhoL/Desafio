@@ -3,47 +3,58 @@
 Console.WriteLine("Digite uma expressão matematica simples (contendo adição, subtração, multiplicação e divisão)");
 string expressao = Console.ReadLine();
 
-var teste = decimal.TryParse("+", out var resultadoEmDecimal);
+var resultadoExpressao = ResolverExpressaoMatematica(expressao);
 
-ResolverExpressaoMatematica(expressao);
+Console.WriteLine("");
+Console.WriteLine($"O resultado da expressão é: {resultadoExpressao}");
 
-string ResolverExpressaoMatematica(string expressao)
+decimal ResolverExpressaoMatematica(string expressao)
 {
     var valoresSeparados = SepararValorEmCaracteres(expressao);
+    decimal valorAtual = 0;
 
-    var valorAtual = decimal.Parse(valoresSeparados.ElementAt(0));
-
-    for (int i = 1; i < valoresSeparados.Count; i += 2)
+    for (int i = 0; i < valoresSeparados.Count; i++)
     {
-        string operador = "";
-        var valorDecimalConvertido = decimal.TryParse(valoresSeparados[i], out var resultadoEmDecimal);
+        if (valoresSeparados[i] == "*")
+        {
+            valorAtual = decimal.Parse(valoresSeparados[i - 1]) * decimal.Parse(valoresSeparados[i + 1]);
+            valoresSeparados.RemoveAt(i);
+            valoresSeparados.Insert(i, valorAtual.ToString());
+            valoresSeparados.RemoveAt(i + 1);
+            valoresSeparados.RemoveAt(i - 1);
+        }
 
-        if (valorDecimalConvertido == true && valoresSeparados[i].Contains('-'))
-            operador = "-";
+        if (!valoresSeparados.Contains("*") && !valoresSeparados.Contains("/"))
+        {
+            for (i=0; i < valoresSeparados.Count; i++)
+            {
+                if (valoresSeparados[i] == "+")
+                {
+                    valorAtual = decimal.Parse(valoresSeparados[i - 1]) + decimal.Parse(valoresSeparados[i + 1]);
+                    valoresSeparados.RemoveAt(i);
+                    valoresSeparados.Insert(i, valorAtual.ToString());
+                    valoresSeparados.RemoveAt(i + 1);
+                    valoresSeparados.RemoveAt(i - 1);
+                }
 
-        if (valorDecimalConvertido == true && valoresSeparados[i].Contains('+'))
-            operador = "+";
-
-
-        if (operador == "+")
-            valorAtual += resultadoEmDecimal;
-
-        else if (operador == "-")
-            valorAtual -= resultadoEmDecimal;
-
-        else if (operador == "*")
-            valorAtual *= resultadoEmDecimal;
-
-        else if (operador == "/")
-            valorAtual /= resultadoEmDecimal;
+                if (valoresSeparados[i] == "-")
+                {
+                    valorAtual = decimal.Parse(valoresSeparados[i - 1]) - decimal.Parse(valoresSeparados[i + 1]);
+                    valoresSeparados.RemoveAt(i);
+                    valoresSeparados.Insert(i, valorAtual.ToString());
+                    valoresSeparados.RemoveAt(i + 1);
+                    valoresSeparados.RemoveAt(i - 1);
+                }
+            }
+        }
     }
 
-    return $"O resultado da expressão é: {valorAtual}";
+    return valorAtual;
 }
 
 List<string> SepararValorEmCaracteres(string expressao)
 {
-    Regex regex = new Regex(@"([-+]?\d+(\.\d+)?([eE][-+]?\d+)?)|(\+|-|\*|/)");
+    Regex regex = new Regex(@"([-]?\d+(\.\d+)?([eE][-+]?\d+)?)|(\+|-|\*|/)");
     var resultado = new List<string>();
 
     foreach (var item in regex.Split(expressao))
